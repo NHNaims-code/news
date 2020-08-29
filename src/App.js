@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment, useState, useEffect } from 'react';
 import './App.css';
+import { Button } from 'react-bootstrap';
+import NewsHeadLine from './components/NewsHeadLine/NewsHeadLine';
+import Header from './components/Header/Header';
 
 function App() {
+  const url = 'http://newsapi.org/v2/top-headlines?'+'country=us&'+'apiKey=7ef3b608e97f4c619d72d39116843627';
+    const [news, setNews] = useState([]);
+    useEffect(() => {
+        fetch(url)
+        .then(response => response.json())
+        .then(news => setNews(news.articles))
+
+    },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Header></Header>
+      <NewsHeadLine news = {news}></NewsHeadLine>
+      <Button variant="danger">Primary</Button>
+    </>
   );
 }
 
